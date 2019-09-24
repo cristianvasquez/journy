@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Notepad</title>
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+    <link rel="stylesheet" href="notepad.css" />
+  </head>
+
+  <body>
+    <div id="popup">
+      <textarea id="pad"></textarea>
+      <div id="markdownTarget"></div>
+      <div id="bar">
+        <button id="changeModeButton"></button>
+        <small id="savingIndicator">saving...</small>
+      </div>
+    </div>
+    <script src="/scripts/marked.min.js"></script>
+    <script src="/scripts/notes.js"></script>
+    <script src="/scripts/darkMode.js"></script>
+    <script src="notepad.js"></script>
+  </body>
+</html>

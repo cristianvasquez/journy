@@ -1,0 +1,84 @@
+html,
+body,
+textarea {
+  background-color: white;
+  color: black;
+}
+
+html.dark,
+body.dark,
+textarea.dark {
+  background-color: #121212;
+  color: white;
+}
+
+body,
+textarea,
+#markdownTarget {
+  margin: 0;
+  padding: 0;
+}
+
+textarea,
+#markdownTarget {
+  border: none;
+  outline: none;
+  padding-left: 4px;
+  padding-right: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 20px);
+  word-wrap: break-word;
+  overflow: auto;
+  resize: none;
+  font-size: 16px;
+}
+
+textarea {
+  font-family: "Inconsolata", monospace;
+}
+
+#markdownTarget {
+  font-family: "Quicksand", sans-serif;
+}
+
+#popup {
+  width: 600px;
+  height: 400px;
+}
+
+#bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 20px;
+  width: 100%;
+  background-color: #8e8e8e;
+}
+
+button,
+#savingIndicator {
+  position: fixed;
+  height: 20px;
+  font-family: "Inconsolata", monospace;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+button {
+  bottom: 0;
+  left: 0;
+  border: none;
+  outline: none;
+  width: 100%;
+  text-align: left;
+  color: #000;
+}
+
+#savingIndicator {
+  bottom: 0;
+  left: 45px;
+  pointer-events: none;
+  line-height: 20px;
+  color: #666666;
+  opacity: 0;
+}

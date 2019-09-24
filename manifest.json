@@ -17,9 +17,7 @@
     "default_title" : "Annotator",
     "default_panel": "sidebar/panel.html"
   },
-
   "permissions": ["storage", "tabs"],
-
   "commands": {
     "_execute_sidebar_action": {
       "suggested_key": {
@@ -40,6 +38,9 @@
       },
       "description": "Sends command to switch between view and edit on new tab page"
     }
+  },
+  "chrome_url_overrides": {
+    "newtab": "newTab/newTab.html"
   },
   "icons": {
     "16": "icons/icon8-bug-16.png",
