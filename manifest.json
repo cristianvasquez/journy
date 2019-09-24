@@ -21,7 +21,8 @@
   "commands": {
     "_execute_sidebar_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Y"
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
       }
     },
     "_execute_browser_action": {
@@ -38,9 +39,6 @@
       },
       "description": "Sends command to switch between view and edit on new tab page"
     }
-  },
-  "chrome_url_overrides": {
-    "newtab": "newTab/newTab.html"
   },
   "icons": {
     "16": "icons/icon8-bug-16.png",
