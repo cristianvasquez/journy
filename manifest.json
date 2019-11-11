@@ -10,12 +10,17 @@
   },
   "browser_action": {
     "default_popup": "notepad/notepad.html",
+    "default_title": "Journy",
     "default_icon": "icons/bug.png"
   },
   "sidebar_action": {
     "default_icon": "icons/bug.png",
-    "default_title" : "Annotator",
-    "default_panel": "sidebar/panel.html"
+    "default_title": "Journy",
+    "default_panel": "dist/index.html"
+  },
+
+  "chrome_url_overrides": {
+    "newtab": "dist/index.html"
   },
   "permissions": ["storage", "tabs"],
   "commands": {

@@ -1,14 +1,19 @@
 # Journy
 
-Took as base:
-[https://github.com/mdn/webextensions-examples](https://github.com/mdn/webextensions-examples)
+Markdown editing: https://github.surmon.me/vue-codemirror/
+Markdown rendering: https://vue-showdown.js.org/
 
-Got ideas from:
-https://github.com/Rayquaza01/note-taker
+## Develop
 
-Got the beauty from:
-https://github.com/mattang687/mark-it
+```
+yarn run serve
+```
 
+Publish
+
+```
+yarn build
+```
 
 ## Testing it
 
@@ -27,8 +32,6 @@ There are a couple ways to try out the example extensions in this repository.
    install the extension automatically. This tool gives you some
    additional development features such as
    [automatic reloading](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Getting_started_with_web-ext#Automatic_extension_reloading).
-
-## 
 
 ## Icons: 
 
