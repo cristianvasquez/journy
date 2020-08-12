@@ -52,7 +52,7 @@
         name: 'app',
         data() {
             return {
-                msg: '`journy` is easy to use :kissing_heart:\n\nPress `ctrl + space` to preview markdown ',
+                msg: '`journy` is? easy to use :kissing_heart:\n\nPress `ctrl + space` to preview markdown ',
                 cmOptions: {
                     // codemirror options
                     tabSize: 4,
@@ -85,21 +85,5 @@
 </script>
 
 <style>
-    /* #editArea {
-    font-family: "Inconsolata", monospace;
-  }
 
-  #viewArea {
-    font-family: "Quicksand", sans-serif;
-  } */
-    .scroller {
-        height: 100%;
-    }
-
-    .folder {
-        height: 32%;
-        padding: 0 12px;
-        display: flex;
-        align-items: center;
-    }
 </style>

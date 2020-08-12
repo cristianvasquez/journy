@@ -1,6 +1,7 @@
 # Journy
 
 Markdown editing: https://github.surmon.me/vue-codemirror/
+
 Markdown rendering: https://vue-showdown.js.org/
 
 ## Develop
