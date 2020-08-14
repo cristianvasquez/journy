@@ -1,5 +1,5 @@
-import Vue from 'vue';
 import App from './App';
+import Vue from 'vue';
 
 import VueKonva from 'vue-konva';
 

@@ -8,42 +8,132 @@
     <v-stage
         ref="stage"
         :config="configKonva"
-        @touchmove="handleTouchmove"
-        @touchend="handleTouchend"
-        @wheel="handleWheel"
+        @touchmove="onTouchmove"
+        @touchend="onTouchend"
+        @wheel="onWheel"
     >
       <v-layer ref="layer">
 
-        <v-star
-            @dragstart="handleDragstart"
-            @dragend="handleDragend"
+        <v-group
             v-for="item in list"
-            :key="item.id"
+            :key="`group-${item.id}`"
+            @dragstart="onDragstart"
+            @dragend="onDragend"
             :config="{
-            x: item.x,
-            y: item.y,
-            rotation: item.rotation,
-            id: item.id,
-            numPoints: 5,
-            innerRadius: 30,
-            outerRadius: 50, fill: '#a21f58',
-            opacity: 0.8,
-            draggable: true,
-            scaleX: dragItemId === item.id ? item.scale * 1.2 : item.scale,
-            scaleY: dragItemId === item.id ? item.scale * 1.2 : item.scale,
-            shadowColor: 'black',
-            shadowBlur: 10,
-            shadowOffsetX: dragItemId === item.id ? 15 : 5,
-            shadowOffsetY: dragItemId === item.id ? 15 : 5,
-            shadowOpacity: 0.6
-          }"
-        ></v-star>
+              x: item.x,
+              y: item.y,
+              // rotation: item.rotation,
+              id: item.id,
+              // width: 300,
+              // height: 200,
+              numPoints: 5,
+              innerRadius: 30,
+              outerRadius: 50, fill: '#a21f58',
+              // opacity: 0.8,
+              draggable: true,
+              scaleX: dragItemId === item.id ? item.scale * 1.2 : item.scale,
+              scaleY: dragItemId === item.id ? item.scale * 1.2 : item.scale,
+              // shadowColor: 'black',
+              // shadowBlur: 10,
+              // shadowOffsetX: dragItemId === item.id ? 15 : 5,
+              // shadowOffsetY: dragItemId === item.id ? 15 : 5,
+              shadowOpacity: 0.6
+            }"
+        >
+          <v-rect
+              :key="`rectangle-${item.id}`"
+              :config="{
+                      // x: item.x,
+                      // y: item.y,
+                      stroke: '#555',
+                      strokeWidth: 5,
+                      fill: '#ddd',
+                      width: 300,
+                      // height: complexText.height(),
+                      height: 200,
+                    }"/>
+          <v-text
+              :key="`text-${item.id}`"
+              :config="{
+                      // x: item.x,
+                      // y: item.y,
+                      text:
+                        'COMPLEX TEXT\n\nAll the world\'s a stage, and all the men and women merely players. They have their exits and their entrances.',
+                      fontSize: 18,
+                      fontFamily: 'Calibri',
+                      fill: '#555',
+                      width: 300,
+                      padding: 20,
+                      align: 'center',
+          }"/>
+        </v-group>
+
+        <!--        <Star-->
+        <!--            title="Hello"-->
+        <!--            :config="{-->
+        <!--              draggable: true,-->
+        <!--            }"-->
+        <!--        ></Star>-->
+        <!--        <v-text-path-->
+        <!--            @dragstart="onDragstart"-->
+        <!--            @dragend="onDragend"-->
+        <!--            v-for="item in list"-->
+        <!--            :key="item.id"-->
+        <!--            :config="{-->
+        <!--              x: item.x,-->
+        <!--              y: item.y,-->
+        <!--              // rotation: item.rotation,-->
+        <!--              id: item.id,-->
+        <!--              // numPoints: 5,-->
+        <!--              // innerRadius: 30,-->
+        <!--              // outerRadius: 50, fill: '#a21f58',-->
+        <!--              opacity: 0.8,-->
+        <!--              draggable: true,-->
+        <!--              // scaleX: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
+        <!--              // scaleY: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
+        <!--              // shadowColor: 'black',-->
+        <!--              // shadowBlur: 10,-->
+        <!--              // shadowOffsetX: dragItemId === item.id ? 15 : 5,-->
+        <!--              // shadowOffsetY: dragItemId === item.id ? 15 : 5,-->
+        <!--              // shadowOpacity: 0.6,-->
+        <!--              fontSize: 16,-->
+        <!--              fontFamily: 'Arial',-->
+        <!--              text: this.title,-->
+        <!--              data: 'M5,12 C0,0 10,150 120,100 S350,120 390,50'-->
+        <!--            }"></v-text-path>-->
+
+        <!--        <v-star-->
+        <!--            @dragstart="onDragstart"-->
+        <!--            @dragend="onDragend"-->
+        <!--            v-for="item in list"-->
+        <!--            :key="item.id"-->
+        <!--            :config="{-->
+        <!--              x: item.x,-->
+        <!--              y: item.y,-->
+        <!--              rotation: item.rotation,-->
+        <!--              id: item.id,-->
+        <!--              numPoints: 5,-->
+        <!--              innerRadius: 30,-->
+        <!--              outerRadius: 50, fill: '#a21f58',-->
+        <!--              opacity: 0.8,-->
+        <!--              draggable: true,-->
+        <!--              scaleX: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
+        <!--              scaleY: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
+        <!--              shadowColor: 'black',-->
+        <!--              shadowBlur: 10,-->
+        <!--              shadowOffsetX: dragItemId === item.id ? 15 : 5,-->
+        <!--              shadowOffsetY: dragItemId === item.id ? 15 : 5,-->
+        <!--              shadowOpacity: 0.6-->
+        <!--            }"-->
+        <!--        ></v-star>-->
       </v-layer>
     </v-stage>
   </div>
 </template>
 
 <script>
+import Star from './components/star/Star.vue';
+
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -60,6 +150,7 @@ function getCenter(p1, p2) {
 }
 
 export default {
+  components: {Star},
   data() {
     return {
       list: [],
@@ -73,11 +164,12 @@ export default {
       lastCenter: null,
       lastDist: 0,
       scaleBy: 1.2,
-
     };
   },
+
   methods: {
-    handleWheel(e) {
+
+    onWheel(e) {
       this.message = e.evt.deltaY < 0 ? 'zooming in' : 'zooming out'
       let stage = this.$refs.stage.getStage()
       e.evt.preventDefault();
@@ -104,7 +196,7 @@ export default {
       stage.batchDraw();
     },
 
-    handleTouchmove(e) {
+    onTouchmove(e) {
       this.message = 'handleTouchmove'
       let stage = this.$refs.stage.getStage()
 
@@ -200,14 +292,14 @@ export default {
       }
     },
 
-    handleTouchend(e) {
+    onTouchend(e) {
       this.message = 'handleTouchend'
       this.lastDist = 0;
       this.lastCenter = null;
       this.lastp1 = null;
     },
 
-    handleDragstart(e) {
+    onDragstart(e) {
       this.message = 'handleDragstart'
       // save drag element:
       this.dragItemId = e.target.id();
@@ -219,10 +311,11 @@ export default {
 
     }
     ,
-    handleDragend(e) {
+    onDragend(e) {
       this.message = 'handleDragend'
       this.dragItemId = null;
     }
+
   },
   mounted() {
     for (let n = 0; n < 30; n++) {

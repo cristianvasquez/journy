@@ -1,13 +1,16 @@
 <template>
   <div>
-    <span>{{ message }}</span>
+    <ul>
+      <li><span>{{ message }}</span></li>
+      <li><span>{{ lastCenter }}</span></li>
+      <li><span>{{ lastDist }}</span></li>
+    </ul>
     <v-stage
         ref="stage"
         :config="configKonva"
-        @touchmove="handleTouchmove"
+        @touchmove="onTouchmove"
         @touchend="handleTouchend"
-        @wheel="handleWheel"
-
+        @wheel="onWheel"
     >
       <v-layer ref="layer">
 
@@ -64,7 +67,7 @@ export default {
       dragItemId: null,
       configKonva: {
         width: width,
-        height: height
+        height: height,
       },
       isDragging: false,
       lastCenter: null,
@@ -74,7 +77,7 @@ export default {
     };
   },
   methods: {
-    handleWheel(e) {
+    onWheel(e) {
       this.message = e.evt.deltaY < 0 ? 'zooming in' : 'zooming out'
       let stage = this.$refs.stage.getStage()
       e.evt.preventDefault();
@@ -101,21 +104,23 @@ export default {
       stage.batchDraw();
     },
 
-    handleTouchmove(e) {
+    onTouchmove(e) {
       this.message = 'handleTouchmove'
-      let stage = this.$refs.stage
+      let stage = this.$refs.stage.getStage()
 
       e.evt.preventDefault();
       let touch1 = e.evt.touches[0];
       let touch2 = e.evt.touches[1];
 
-      if (touch1 && touch2) {
+      if (touch1 || touch2) {
         // if the stage was under Konva's drag&drop
         // we need to stop it, and implement our own pan logic with two pointers
         if (stage.isDragging()) {
           stage.stopDrag();
         }
+      }
 
+      if (touch1 && touch2) {
         let p1 = {
           x: touch1.clientX,
           y: touch1.clientY,
@@ -130,13 +135,10 @@ export default {
           return;
         }
         let newCenter = getCenter(p1, p2);
-
         let dist = getDistance(p1, p2);
-
         if (!this.lastDist) {
           this.lastDist = dist;
         }
-
         // local coordinates of center point
         let pointTo = {
           x: (newCenter.x - stage.x()) / stage.scaleX(),
@@ -162,6 +164,39 @@ export default {
 
         this.lastDist = dist;
         this.lastCenter = newCenter;
+        // ############################
+        // Handle single touch, (TODO: cleanup this mess)
+      } else if (touch1) {
+
+        let p1 = {
+          x: touch1.clientX,
+          y: touch1.clientY,
+        };
+
+        if (!this.lastp1) {
+          this.lastp1 = p1;
+          return;
+        }
+
+        let pointTo = {
+          x: (p1.x - stage.x()) / stage.scaleX(),
+          y: (p1.y - stage.y()) / stage.scaleY(),
+        };
+
+        // calculate new position of the stage
+        let dx = p1.x - this.lastp1.x;
+        let dy = p1.y - this.lastp1.y;
+
+        let newPos = {
+          x: p1.x - pointTo.x * stage.scaleX() + dx,
+          y: p1.y - pointTo.y * stage.scaleY() + dy,
+        };
+
+        stage.position(newPos);
+        stage.batchDraw();
+
+        this.lastDist = 0;
+        this.lastp1 = p1;
       }
     },
 
@@ -169,6 +204,7 @@ export default {
       this.message = 'handleTouchend'
       this.lastDist = 0;
       this.lastCenter = null;
+      this.lastp1 = null;
     },
 
     handleDragstart(e) {
