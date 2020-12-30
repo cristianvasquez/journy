@@ -1,4 +1,4 @@
-import App from './App';
+import App from './Canvas';
 import Vue from 'vue';
 
 import VueKonva from 'vue-konva';

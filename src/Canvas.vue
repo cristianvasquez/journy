@@ -1,10 +1,6 @@
 <template>
   <div>
-    <ul>
-      <li><span>{{ message }}</span></li>
-      <li><span>{{ lastCenter }}</span></li>
-      <li><span>{{ lastDist }}</span></li>
-    </ul>
+
     <v-stage
         ref="stage"
         :config="configKonva"
@@ -13,6 +9,19 @@
         @wheel="onWheel"
     >
       <v-layer ref="layer">
+        <v-text
+            :key="1"
+            :config="{
+                      x: 0,
+                      y: 0,
+                      text: debug_message,
+                      fontSize: 18,
+                      fontFamily: 'Calibri',
+                      fill: '#555',
+                      width: 300,
+                      padding: 20,
+                      align: 'center',
+          }"/>
 
         <v-group
             v-for="item in list"
@@ -22,110 +31,23 @@
             :config="{
               x: item.x,
               y: item.y,
-              // rotation: item.rotation,
+              rotation: item.rotation,
               id: item.id,
-              // width: 300,
-              // height: 200,
-              numPoints: 5,
-              innerRadius: 30,
-              outerRadius: 50, fill: '#a21f58',
-              // opacity: 0.8,
               draggable: true,
               scaleX: dragItemId === item.id ? item.scale * 1.2 : item.scale,
               scaleY: dragItemId === item.id ? item.scale * 1.2 : item.scale,
-              // shadowColor: 'black',
-              // shadowBlur: 10,
-              // shadowOffsetX: dragItemId === item.id ? 15 : 5,
-              // shadowOffsetY: dragItemId === item.id ? 15 : 5,
+              shadowColor: 'black',
+              shadowBlur: 10,
+              shadowOffsetX: dragItemId === item.id ? 15 : 5,
+              shadowOffsetY: dragItemId === item.id ? 15 : 5,
               shadowOpacity: 0.6
             }"
         >
-          <v-rect
-              :key="`rectangle-${item.id}`"
-              :config="{
-                      // x: item.x,
-                      // y: item.y,
-                      stroke: '#555',
-                      strokeWidth: 5,
-                      fill: '#ddd',
-                      width: 300,
-                      // height: complexText.height(),
-                      height: 200,
-                    }"/>
-          <v-text
-              :key="`text-${item.id}`"
-              :config="{
-                      // x: item.x,
-                      // y: item.y,
-                      text:
-                        'COMPLEX TEXT\n\nAll the world\'s a stage, and all the men and women merely players. They have their exits and their entrances.',
-                      fontSize: 18,
-                      fontFamily: 'Calibri',
-                      fill: '#555',
-                      width: 300,
-                      padding: 20,
-                      align: 'center',
-          }"/>
+
+          <markdown-file :item="item"/>
+          <star title="Hello" :item="item"/>
+
         </v-group>
-
-        <!--        <Star-->
-        <!--            title="Hello"-->
-        <!--            :config="{-->
-        <!--              draggable: true,-->
-        <!--            }"-->
-        <!--        ></Star>-->
-        <!--        <v-text-path-->
-        <!--            @dragstart="onDragstart"-->
-        <!--            @dragend="onDragend"-->
-        <!--            v-for="item in list"-->
-        <!--            :key="item.id"-->
-        <!--            :config="{-->
-        <!--              x: item.x,-->
-        <!--              y: item.y,-->
-        <!--              // rotation: item.rotation,-->
-        <!--              id: item.id,-->
-        <!--              // numPoints: 5,-->
-        <!--              // innerRadius: 30,-->
-        <!--              // outerRadius: 50, fill: '#a21f58',-->
-        <!--              opacity: 0.8,-->
-        <!--              draggable: true,-->
-        <!--              // scaleX: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
-        <!--              // scaleY: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
-        <!--              // shadowColor: 'black',-->
-        <!--              // shadowBlur: 10,-->
-        <!--              // shadowOffsetX: dragItemId === item.id ? 15 : 5,-->
-        <!--              // shadowOffsetY: dragItemId === item.id ? 15 : 5,-->
-        <!--              // shadowOpacity: 0.6,-->
-        <!--              fontSize: 16,-->
-        <!--              fontFamily: 'Arial',-->
-        <!--              text: this.title,-->
-        <!--              data: 'M5,12 C0,0 10,150 120,100 S350,120 390,50'-->
-        <!--            }"></v-text-path>-->
-
-        <!--        <v-star-->
-        <!--            @dragstart="onDragstart"-->
-        <!--            @dragend="onDragend"-->
-        <!--            v-for="item in list"-->
-        <!--            :key="item.id"-->
-        <!--            :config="{-->
-        <!--              x: item.x,-->
-        <!--              y: item.y,-->
-        <!--              rotation: item.rotation,-->
-        <!--              id: item.id,-->
-        <!--              numPoints: 5,-->
-        <!--              innerRadius: 30,-->
-        <!--              outerRadius: 50, fill: '#a21f58',-->
-        <!--              opacity: 0.8,-->
-        <!--              draggable: true,-->
-        <!--              scaleX: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
-        <!--              scaleY: dragItemId === item.id ? item.scale * 1.2 : item.scale,-->
-        <!--              shadowColor: 'black',-->
-        <!--              shadowBlur: 10,-->
-        <!--              shadowOffsetX: dragItemId === item.id ? 15 : 5,-->
-        <!--              shadowOffsetY: dragItemId === item.id ? 15 : 5,-->
-        <!--              shadowOpacity: 0.6-->
-        <!--            }"-->
-        <!--        ></v-star>-->
       </v-layer>
     </v-stage>
   </div>
@@ -133,6 +55,7 @@
 
 <script>
 import Star from './components/star/Star.vue';
+import MarkdownFile from './components/text/MarkdownFile.vue';
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -150,7 +73,7 @@ function getCenter(p1, p2) {
 }
 
 export default {
-  components: {Star},
+  components: {Star, MarkdownFile},
   data() {
     return {
       list: [],
@@ -257,7 +180,7 @@ export default {
         this.lastDist = dist;
         this.lastCenter = newCenter;
         // ############################
-        // Handle single touch, (TODO: cleanup this mess)
+        // Handle single touch, (TODO: clean this mess)
       } else if (touch1) {
 
         let p1 = {
@@ -308,7 +231,6 @@ export default {
       const index = this.list.indexOf(item);
       this.list.splice(index, 1);
       this.list.push(item);
-
     }
     ,
     onDragend(e) {
@@ -317,13 +239,26 @@ export default {
     }
 
   },
+  computed: {
+
+    debug_message() {
+      return `message: ${this.message}
+lastCenter: ${this.lastCenter}
+lastDist: ${this.lastDist}
+`
+    },
+  },
+
   mounted() {
     for (let n = 0; n < 30; n++) {
+
+      let id = Math.round(Math.random() * 10000).toString()
       this.list.push({
-        id: Math.round(Math.random() * 10000).toString(),
+        id: id,
+        title: 'Item '+id,
         x: Math.random() * width,
         y: Math.random() * height,
-        rotation: Math.random() * 180,
+        rotation: Math.random() * 130,
         scale: Math.random()
       });
     }

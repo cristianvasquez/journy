@@ -1,19 +1,18 @@
 <template>
-    <v-text-path v-bind:config="computed_conf" />
-<!--    <v-shape :config="{-->
-<!--        sceneFunc: function(context) {-->
-<!--          context.beginPath();-->
-<!--          context.moveTo(20, 50);-->
-<!--          context.lineTo(220, 80);-->
-<!--          context.quadraticCurveTo(150, 100, 260, 170);-->
-<!--          context.closePath();-->
-<!--          // special Konva.js method-->
-<!--          context.fillStrokeShape(this);-->
-<!--        },-->
-<!--        fill: '#ff0033',-->
-<!--        stroke: 'black',-->
-<!--        strokeWidth: 4-->
-<!--      }"/>-->
+  <div>
+    <v-star
+        :key="item.id"
+        :config="{
+
+            rotation: item.rotation,
+            id: item.id,
+            numPoints: 5,
+            innerRadius: 30,
+            outerRadius: 50, fill: '#a21f58',
+            opacity: 0.8,
+          }"
+    ></v-star>
+  </div>
 </template>
 
 <script>
@@ -23,37 +22,24 @@ export default {
   name: 'my-star',
   data() {
     return {
-      list: [],
-      // tp_conf: {
-      //   x: 10, y: 30,
-      //   fill: '#333',
-      //   fontSize: 16,
-      //   fontFamily: 'Arial',
-      //   text: "This two-story building made out of bricks is a place that shouldn't...",
-      //   data: 'M5,12 C0,0 10,150 120,100 S350,120 390,50'
-      // },
+
     };
   },
   props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    config: {
+    item: {
       type: Object,
       required: true
     }
   },
-
   computed: {
-    computed_conf(){
-      let result = this.config
+    computed_conf() {
+      let result = this.item
       Object.assign(result, {
         // x: 10, y: 30,
         // fill: '#333',
         fontSize: 16,
         fontFamily: 'Arial',
-        text: this.title,
+        text: 'Text',
         data: 'M5,12 C0,0 10,150 120,100 S350,120 390,50'
       })
       return result;
